@@ -11,8 +11,14 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import rpc.anotation.RpcService;
-import rpc.registry.local.RpcLocalRegistry;
+import rpc.config.ServerConfig;
+import rpc.config.ServiceConfig;
+import rpc.exception.RpcException;
+import rpc.registry.RpcRegistry;
+import rpc.utils.IpUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,16 +44,20 @@ public class RpcServerApplicationListener implements ApplicationListener<Context
         //查找所有@RpcService bean
         Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RpcService.class);
         if (beans.size() > 0) {
+            List<ServiceConfig> serviceConfigs = new ArrayList<>();
             for (Map.Entry<String, Object> entry : beans.entrySet()) {
                 //找到该bean继承的client
                 final Class<?> client = getTopLevelInterface(entry.getValue().getClass());
                 //注册
                 if (null != client) {
                     final RpcService rpcService = client.getAnnotation(RpcService.class);
-                    final String app = rpcServerProperties.getApp();
-                    final int port = rpcServerProperties.getPort();
-                    //todo
+                    serviceConfigs.add(ServiceConfig.builder().serviceName(client.getName()).build());
                 }
+            }
+            try {
+                RpcRegistry.getDefaultRpcRegistry().register(rpcServerProperties.getApp(), IpUtils.IP_LAN, rpcServerProperties.getPort(), new ServerConfig(), serviceConfigs);
+            } catch (Exception e) {
+                throw new RpcException("rpc register error", e);
             }
         }
     }
