@@ -8,7 +8,7 @@ public interface RpcLoadBalance<T> {
     /**
      * 根据服务名选择服务
      *
-     * @param request
+     * @param servers
      * @return
      */
     T select(List<T> servers);
