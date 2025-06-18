@@ -1,4 +1,4 @@
-package rpc;
+package rpc.invoker;
 
 import rpc.cluster.FailFastRpcCluster;
 import rpc.cluster.RpcCluster;
@@ -36,7 +36,7 @@ public class RpcInvoker {
         addRpcTransport("http", new RpcHttpRpcTransport());
     }
 
-    public <R> Future<R> invoke(RpcRequest request) throws Exception {
+    public static <R> Future<R> invoke(RpcRequest request) throws Exception {
         //1 获取容错
         RpcCluster<Future<?>> faultTolerant = FAULT_TOLERANT_MAP.get(request.getServiceName());
         //2 获取router，router本身可能是个链
