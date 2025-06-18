@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ServerConfig {
+    private String app;
+    private Integer port;
 }

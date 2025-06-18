@@ -11,4 +11,6 @@ import org.springframework.stereotype.Component;
 public class RpcServerProperties {
     public static final String PREFIX = "rpc.server";
     private Boolean enabled = true;
+    private String app = "default";
+    private Integer port = 8080;
 }
