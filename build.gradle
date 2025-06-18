@@ -23,6 +23,8 @@ subprojects {
         implementation 'org.slf4j:slf4j-api:1.7.32'
         implementation 'org.apache.commons:commons-lang3:3.12.0'
         implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+        annotationProcessor('org.projectlombok:lombok:1.18.22')
+        implementation('org.projectlombok:lombok:1.18.22')
 
         testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.5.1'
         testImplementation group: 'junit', name: 'junit', version: '4.13.2'
