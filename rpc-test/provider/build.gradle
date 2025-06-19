@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':rpc-spring-boot-starter')
+    implementation project(':rpc-test:client')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.7'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.5.7'
+}

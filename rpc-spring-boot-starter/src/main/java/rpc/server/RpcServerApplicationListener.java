@@ -21,13 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author JerryLong
- * @version V1.0
- * @Title: ZeusServerApplicationListener
- * @Description: //TODO (用一句话描述该文件做什么)
- * @date 2023/3/22 10:37
- */
+
 @Component
 @EnableConfigurationProperties(RpcServerProperties.class)
 public class RpcServerApplicationListener implements ApplicationListener<ContextRefreshedEvent>, ApplicationContextAware {

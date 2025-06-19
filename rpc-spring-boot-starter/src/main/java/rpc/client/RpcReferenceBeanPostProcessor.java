@@ -7,19 +7,12 @@ import rpc.anotation.RpcReference;
 
 import java.lang.reflect.Field;
 
-/**
- * @author JerryLong
- * @version V1.0
- * @Title: ZeusReferenceBeanPostProcessor
- * @Description: //TODO (用一句话描述该文件做什么)
- * @date 2023/7/11 16:49
- */
 public class RpcReferenceBeanPostProcessor implements BeanPostProcessor {
 
-    private final RpcClientProperties zeusRpcClientProperties;
+    private final RpcClientProperties rpcClientProperties;
 
-    public RpcReferenceBeanPostProcessor(RpcClientProperties zeusRpcClientProperties) {
-        this.zeusRpcClientProperties = zeusRpcClientProperties;
+    public RpcReferenceBeanPostProcessor(RpcClientProperties rpcClientProperties) {
+        this.rpcClientProperties = rpcClientProperties;
     }
 
     @Override
@@ -27,7 +20,7 @@ public class RpcReferenceBeanPostProcessor implements BeanPostProcessor {
         //循环所有属性
         Field[] fields = bean.getClass().getDeclaredFields();
         for (Field field : fields) {
-            //判断属性是否是zeusReference注解
+            //判断属性是否是RpcReference注解
             if (field.isAnnotationPresent(RpcReference.class)) {
                 //赋值
                 field.setAccessible(true);

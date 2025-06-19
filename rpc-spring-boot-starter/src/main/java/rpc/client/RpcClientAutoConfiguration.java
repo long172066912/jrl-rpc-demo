@@ -25,7 +25,7 @@ public class RpcClientAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RpcReferenceBeanPostProcessor zeusReferenceBeanPostProcessor(RpcClientProperties rpcReferenceBeanPostProcessor) {
+    public RpcReferenceBeanPostProcessor rpcReferenceBeanPostProcessor(RpcClientProperties rpcReferenceBeanPostProcessor) {
         return new RpcReferenceBeanPostProcessor(rpcReferenceBeanPostProcessor);
     }
 }
