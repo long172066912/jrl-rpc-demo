@@ -2,4 +2,8 @@ rootProject.name = 'jrl-rpc-demo'
 
 include ':rpc-common'
 include ':rpc-spring-boot-starter'
-include ':rpc-test'
+
+
+include ':rpc-test:client'
+include ':rpc-test:provider'
+include ':rpc-test:consumer'
