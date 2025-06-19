@@ -13,6 +13,7 @@
 
 package rpc.client;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ public class RpcClientAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RpcReferenceBeanPostProcessor rpcReferenceBeanPostProcessor(RpcClientProperties rpcReferenceBeanPostProcessor) {
+    public RpcReferenceBeanPostProcessor rpcReferenceBeanPostProcessor(@Autowired RpcClientProperties rpcReferenceBeanPostProcessor) {
         return new RpcReferenceBeanPostProcessor(rpcReferenceBeanPostProcessor);
     }
 }

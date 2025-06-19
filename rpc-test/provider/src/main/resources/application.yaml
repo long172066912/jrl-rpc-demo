@@ -3,3 +3,5 @@ rpc:
     enabled: true
     app: rpc-server
     port: 8080
+server:
+  port: 8080
