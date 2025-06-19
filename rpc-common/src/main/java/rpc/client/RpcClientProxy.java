@@ -36,7 +36,7 @@ public class RpcClientProxy implements InvocationHandler {
                 .transport("http")
                 .returnType(method.getReturnType())
                 .build());
-        return future.get(config.getTimeout(), TimeUnit.MILLISECONDS);
+        return future.get(null == config ? 2000 : config.getTimeout(), TimeUnit.MILLISECONDS);
     }
 
     public Object getProxyInstance() {

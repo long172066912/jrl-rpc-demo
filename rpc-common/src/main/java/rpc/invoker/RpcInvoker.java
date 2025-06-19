@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
  */
 public class RpcInvoker {
 
-    private static final Map<String, RpcCluster<Future<?>>> FAULT_TOLERANT_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, RpcCluster<Future<Object>>> FAULT_TOLERANT_MAP = new ConcurrentHashMap<>();
     private static final Map<String, RpcLoadBalance<RpcRegistryAppInfo>> LOAD_BALANCE_MAP = new ConcurrentHashMap<>();
     private static final Map<String, RpcRouter<RpcRegistryAppInfo>> ROUTER_MAP = new ConcurrentHashMap<>();
     private static final Map<String, RpcTransport> TRANSPORT_MAP = new ConcurrentHashMap<>();
@@ -36,9 +36,9 @@ public class RpcInvoker {
         addRpcTransport("http", new RpcHttpRpcTransport());
     }
 
-    public static <R> Future<R> invoke(RpcRequest request) throws Exception {
+    public static Future<Object> invoke(RpcRequest request) throws Exception {
         //1 获取容错
-        RpcCluster<Future<?>> faultTolerant = FAULT_TOLERANT_MAP.get(request.getCluster());
+        RpcCluster<Future<Object>> faultTolerant = FAULT_TOLERANT_MAP.get(request.getCluster());
         //2 获取router，router本身可能是个链
         RpcRouter<RpcRegistryAppInfo> router = ROUTER_MAP.get("default");
         //3 获取loadbalance
@@ -46,7 +46,9 @@ public class RpcInvoker {
         //4 获取传输管道
         RpcTransport transport = TRANSPORT_MAP.get(request.getTransport());
         final RpcRegistry registry = RpcRegistry.getDefaultRpcRegistry();
-        return (Future<R>) faultTolerant.invoke(request, registry.getServiceRegistryAppInfo(request.getServiceName()),
+        return faultTolerant.invoke(
+                request,
+                registry.getServiceRegistryAppInfo(request.getServiceName()),
                 (request1, servers) -> {
                     final RpcRegistryAppInfo appInfo = loadBalance.select(router.select(request1, servers));
                     if (null == appInfo) {

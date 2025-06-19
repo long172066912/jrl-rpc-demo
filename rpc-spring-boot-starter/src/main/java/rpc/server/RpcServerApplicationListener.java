@@ -20,6 +20,7 @@ import rpc.utils.IpUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Component
@@ -30,6 +31,7 @@ public class RpcServerApplicationListener implements ApplicationListener<Context
 
     @Autowired
     private RpcServerProperties rpcServerProperties;
+    public static final Map<String, Object> PROVIDERS = new ConcurrentHashMap<>();
 
     private ApplicationContext applicationContext;
 
@@ -46,6 +48,7 @@ public class RpcServerApplicationListener implements ApplicationListener<Context
                 if (null != client) {
                     final RpcService rpcService = client.getAnnotation(RpcService.class);
                     serviceConfigs.add(ServiceConfig.builder().serviceName(client.getName()).build());
+                    PROVIDERS.put(client.getName(), entry.getValue());
                 }
             }
             try {
