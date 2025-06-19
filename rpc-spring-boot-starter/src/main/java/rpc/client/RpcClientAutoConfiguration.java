@@ -24,9 +24,12 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(RpcClientProperties.class)
 public class RpcClientAutoConfiguration {
 
+    @Autowired
+    private RpcClientProperties rpcClientProperties;
+
     @Bean
     @ConditionalOnMissingBean
-    public RpcReferenceBeanPostProcessor rpcReferenceBeanPostProcessor(@Autowired RpcClientProperties rpcReferenceBeanPostProcessor) {
-        return new RpcReferenceBeanPostProcessor(rpcReferenceBeanPostProcessor);
+    public RpcReferenceBeanPostProcessor rpcReferenceBeanPostProcessor() {
+        return new RpcReferenceBeanPostProcessor(rpcClientProperties);
     }
 }

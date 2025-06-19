@@ -32,15 +32,15 @@ public class RpcInvoker {
     static {
         addRpcCluster("failFast", new FailFastRpcCluster());
         addRpcRouter("default", new DefaultRpcRouter());
-        addRpcLoadBalance("default", new DefaultRpcLoadBalance());
+        addRpcLoadBalance("random", new DefaultRpcLoadBalance());
         addRpcTransport("http", new RpcHttpRpcTransport());
     }
 
     public static <R> Future<R> invoke(RpcRequest request) throws Exception {
         //1 获取容错
-        RpcCluster<Future<?>> faultTolerant = FAULT_TOLERANT_MAP.get(request.getServiceName());
+        RpcCluster<Future<?>> faultTolerant = FAULT_TOLERANT_MAP.get(request.getCluster());
         //2 获取router，router本身可能是个链
-        RpcRouter<RpcRegistryAppInfo> router = ROUTER_MAP.get(request.getLoadBalance());
+        RpcRouter<RpcRegistryAppInfo> router = ROUTER_MAP.get("default");
         //3 获取loadbalance
         RpcLoadBalance<RpcRegistryAppInfo> loadBalance = LOAD_BALANCE_MAP.get(request.getLoadBalance());
         //4 获取传输管道

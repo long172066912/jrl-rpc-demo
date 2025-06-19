@@ -21,7 +21,8 @@ public class RpcRequest implements Serializable {
     private Class<?>[] parameterTypes;
     private Object[] parameters;
     private Class<?> returnType;
-    private String loadBalance = "failFast";
+    private String cluster = "failFast";
+    private String loadBalance = "random";
     private String transport = "http";
     private String registry;
 }

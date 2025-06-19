@@ -31,6 +31,9 @@ public class RpcClientProxy implements InvocationHandler {
                 .methodName(method.getName())
                 .parameterTypes(method.getParameterTypes())
                 .parameters(args)
+                .loadBalance("random")
+                .cluster("failFast")
+                .transport("http")
                 .returnType(method.getReturnType())
                 .build());
         return future.get(config.getTimeout(), TimeUnit.MILLISECONDS);

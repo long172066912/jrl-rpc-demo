@@ -50,6 +50,7 @@ public class RpcServerApplicationListener implements ApplicationListener<Context
             }
             try {
                 RpcRegistry.getDefaultRpcRegistry().register(rpcServerProperties.getApp(), IpUtils.IP_LAN, rpcServerProperties.getPort(), new ServerConfig(), serviceConfigs);
+                LOGGER.info("rpc register success");
             } catch (Exception e) {
                 throw new RpcException("rpc register error", e);
             }
