@@ -16,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RpcRequest implements Serializable {
+    private Long id;
     private String serviceName;
     private String methodName;
     private Class<?>[] parameterTypes;

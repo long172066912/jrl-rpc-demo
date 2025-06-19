@@ -1,13 +1,12 @@
 package rpc.transport.http;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import rpc.exception.RpcException;
 import rpc.transport.RpcRequest;
+import rpc.transport.RpcResponse;
 import rpc.transport.RpcTransport;
 import rpc.utils.HttpPostUtil;
 import rpc.utils.json.JrlJsonUtil;
 
-import java.lang.reflect.Type;
 import java.util.concurrent.*;
 
 public class RpcHttpRpcTransport implements RpcTransport {
@@ -20,16 +19,12 @@ public class RpcHttpRpcTransport implements RpcTransport {
         POOL.execute(() -> {
             try {
                 final String s = HttpPostUtil.postJson("http://" + ip + ":" + port + "/rpc", JrlJsonUtil.toJson(request));
-                //反序列化
+                RpcResponse rpcResponse = JrlJsonUtil.fromJson(s, RpcResponse.class);
                 if (isWrapClass(request.getReturnType())) {
-                    future.complete(s);
+                    future.complete(rpcResponse.getData());
                 } else {
-                    future.complete(JrlJsonUtil.fromJson(s, new TypeReference<Object>() {
-                        @Override
-                        public Type getType() {
-                            return request.getReturnType();
-                        }
-                    }));
+                    //反序列化
+                    future.complete(rpcResponse.getData());
                 }
             } catch (Exception e) {
                 future.completeExceptionally(new RpcException("rpc request error !", e));
