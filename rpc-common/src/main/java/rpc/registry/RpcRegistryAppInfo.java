@@ -16,7 +16,7 @@ import java.util.List;
 public class RpcRegistryAppInfo {
     private String app;
     private String ip;
-    private int port;
+    private Integer port;
     private ServerConfig serverConfig;
     private List<ServiceConfig> serviceConfigs;
 }
