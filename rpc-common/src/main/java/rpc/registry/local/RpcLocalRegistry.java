@@ -43,7 +43,7 @@ public class RpcLocalRegistry implements RpcRegistry {
     public void unRegister(String app, String ip) throws Exception {
         final String filePath = BASE_DIR + "/" + app + "/" + getFileName(ip);
         FileUtil.del(filePath);
-        LOGGER.info("rpc register success, app : {}, ip : {} , filePath : {}", app, ip, filePath);
+        LOGGER.info("rpc unRegister success, app : {}, ip : {} , filePath : {}", app, ip, filePath);
     }
 
     @Override

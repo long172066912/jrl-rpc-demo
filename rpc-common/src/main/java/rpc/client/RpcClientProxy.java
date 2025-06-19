@@ -1,5 +1,7 @@
 package rpc.client;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rpc.config.ReferenceConfig;
 import rpc.invoker.RpcInvoker;
 import rpc.transport.RpcRequest;
@@ -11,7 +13,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class RpcClientProxy implements InvocationHandler {
-
+    private Logger LOGGER = LoggerFactory.getLogger(RpcClientProxy.class);
     private ReferenceConfig config;
     private Class<?> serviceInterface;
     private Object proxyInstance;
@@ -36,7 +38,7 @@ public class RpcClientProxy implements InvocationHandler {
                 .transport("http")
                 .returnType(method.getReturnType())
                 .build());
-        return future.get(null == config ? 2000 : config.getTimeout(), TimeUnit.MILLISECONDS);
+        return future.get(null == config || null == config.getTimeout() ? 2000 : config.getTimeout(), TimeUnit.MILLISECONDS);
     }
 
     public Object getProxyInstance() {
