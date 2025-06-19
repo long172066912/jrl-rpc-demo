@@ -3,7 +3,7 @@ package rpc.invoker;
 import rpc.cluster.FailFastRpcCluster;
 import rpc.cluster.RpcCluster;
 import rpc.exception.RpcException;
-import rpc.loadbalance.DefaultRpcLoadBalance;
+import rpc.loadbalance.RpcLoadBalanceRandom;
 import rpc.loadbalance.RpcLoadBalance;
 import rpc.registry.RpcRegistry;
 import rpc.registry.RpcRegistryAppInfo;
@@ -32,7 +32,7 @@ public class RpcInvoker {
     static {
         addRpcCluster("failFast", new FailFastRpcCluster());
         addRpcRouter("default", new DefaultRpcRouter());
-        addRpcLoadBalance("random", new DefaultRpcLoadBalance());
+        addRpcLoadBalance("random", new RpcLoadBalanceRandom());
         addRpcTransport("http", new RpcHttpRpcTransport());
     }
 

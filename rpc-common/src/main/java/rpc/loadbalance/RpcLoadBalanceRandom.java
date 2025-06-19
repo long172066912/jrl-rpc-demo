@@ -5,7 +5,7 @@ import rpc.registry.RpcRegistryAppInfo;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DefaultRpcLoadBalance implements RpcLoadBalance<RpcRegistryAppInfo> {
+public class RpcLoadBalanceRandom implements RpcLoadBalance<RpcRegistryAppInfo> {
 
     @Override
     public RpcRegistryAppInfo select(List<RpcRegistryAppInfo> servers) {
