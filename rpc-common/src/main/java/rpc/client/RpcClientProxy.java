@@ -9,8 +9,6 @@ import rpc.transport.RpcRequest;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class RpcClientProxy implements InvocationHandler {
@@ -30,7 +28,7 @@ public class RpcClientProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        final Future<Object> future = RpcInvoker.invoke(RpcRequest.builder()
+        return RpcInvoker.invoke(RpcRequest.builder()
                 .id(id.incrementAndGet())
                 .serviceName(serviceInterface.getName())
                 .methodName(method.getName())
@@ -41,7 +39,6 @@ public class RpcClientProxy implements InvocationHandler {
                 .transport("http")
                 .returnType(method.getReturnType())
                 .build());
-        return future.get(null == config || null == config.getTimeout() ? 2000 : config.getTimeout(), TimeUnit.MILLISECONDS);
     }
 
     public Object getProxyInstance() {
