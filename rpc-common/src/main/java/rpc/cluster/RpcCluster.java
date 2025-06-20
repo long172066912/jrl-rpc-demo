@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.function.BiFunction;
 
-public interface RpcCluster<T> {
+public interface RpcCluster<R> {
     /**
      * 执行请求
      *
@@ -16,5 +16,5 @@ public interface RpcCluster<T> {
      * @param handler
      * @return
      */
-    T invoke(RpcRequest request, List<RpcRegistryAppInfo> apps, BiFunction<RpcRequest, List<RpcRegistryAppInfo>, Future<T>> handler);
+    R invoke(RpcRequest request, List<RpcRegistryAppInfo> apps, BiFunction<RpcRequest, List<RpcRegistryAppInfo>, Future<R>> handler);
 }
